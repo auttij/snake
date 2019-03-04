@@ -3,7 +3,7 @@ h = 480;
 
 var s;          // Global variable for storing the Snake object
 var scl = 20;   // Scale used for size of single block
-var apos = { 'x': 0, 'y':0 };
+var apos; //global variable for storing apple position
 
 function setup() {
     createCanvas(w, h);
@@ -32,13 +32,13 @@ function keyPressed() {
 }
 
 function apple() {
-    apos['x'] = floor(random(width / scl)) * scl;
-    apos['y'] = floor(random(height / scl)) * scl;
+    apos = [floor(random(width / scl)) * scl,
+            floor(random(height / scl)) * scl];
 }
 
 function showApple() {
     fill('red');
-    rect(apos['x'], apos['y'], scl, scl);
+    rect(apos[0], apos[1], scl, scl);
 }
 
 
