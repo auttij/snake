@@ -7,12 +7,14 @@ function Snake() {
     this.tail = [];
 
     this.dir = function(x, y) {
-        this.xspeed = x;
-        this.yspeed = y;
+        if (this.xspeed != -x && this.yspeed != -y) {
+            this.xspeed = x;
+            this.yspeed = y;
+        }
     }
 
     this.eat = function() {
-        if ((this.x - apos['x']) == 0 && (this.y - apos['y']) == 0) {
+        if ((this.x - apos[0]) == 0 && (this.y - apos[1]) == 0) {
             this.length++;
             apple();
         }
@@ -28,6 +30,7 @@ function Snake() {
 
         this.eat();
 
+        // If we ate ate an apple, the oldest block doesn't get deleted
         if (this.tail.length > this.length) {            
             this.tail = _.dropRight(this.tail, 1);
         }
@@ -36,6 +39,7 @@ function Snake() {
 
     this.show = function() {
         // Draw tail first, then head block
+        // Newest position of tail is same as head position and doesn't get drawn
         for (i = 1; i < this.tail.length; i++) {
             fill(200);
             block = this.tail[i];
