@@ -41,13 +41,13 @@ function drawPause() {
 }
 
 function keyPressed() {
-    if (keyCode === LEFT_ARROW || keyCode === "A") {
+    if (keyCode === LEFT_ARROW || key === "a") {
         s.dir(-1, 0);
-    } else if (keyCode === RIGHT_ARROW || keyCode === 'D') {
+    } else if (keyCode === RIGHT_ARROW || key === "d") {
         s.dir(1, 0);
-    }  else if (keyCode === UP_ARROW || keyCode === 'W') {
+    }  else if (keyCode === UP_ARROW || key === "w") {
         s.dir(0, -1);
-    } else if (keyCode === DOWN_ARROW || keyCode === 'S') {
+    } else if (keyCode === DOWN_ARROW || key == 's') {
         s.dir(0, 1);
     } else if (keyCode == ESCAPE) {
         running = !running; // Toggles paused
