@@ -7,7 +7,8 @@ var apos;       // Global variable for storing apple position
 var running = true  // Toggles pausing the game
 
 function setup() {
-    createCanvas(w, h);
+    let canvas = createCanvas(w, h);
+    canvas.position = (50, 50)
     frameRate(12);
     s = new Snake();
     apple();

@@ -5,12 +5,22 @@ function Snake() {
     this.yspeed = 0;
     this.length = 2;
     this.tail = [];
+    this.inputPos = [this.x, this.y]; //last position where input was checked
 
     this.dir = function(x, y) {
-        // If player turns twice quick enough, it's possible to do 180 turns
-        if (this.xspeed != -x && this.yspeed != -y) {
-            this.xspeed = x;
-            this.yspeed = y;
+        // Disallow 180 turns
+        switch (this.length > 1) {
+            case true:
+                pos = this.tail[0]; // Head of tail, we can't go there or it's a 180 turn.
+                newx = this.x + scl * x;
+                newy = this.y + scl * y;
+                d = dist(newx, newy, pos[0], pos[1]);
+                if (d < 1) { break; }
+            case false:
+                if (this.xspeed != -x && this.yspeed != -y) {
+                    this.xspeed = x;
+                    this.yspeed = y;
+                }
         }
     }
 
@@ -42,8 +52,10 @@ function Snake() {
             this.tail = _.dropRight(this.tail, 1);
         }
 
-        this.x = this.x + this.xspeed * scl;
-        this.y = this.y + this.yspeed * scl;
+        this.x = (this.x + this.xspeed * scl) % w;
+        this.y = (this.y + this.yspeed * scl) % h;
+        if (this.x < 0) { this.x = w }
+        if (this.y < 0) { this.y = h }
         
         // constrain x and y values so snake doesn't go offscreen 
         this.x = constrain(this.x, 0, width - scl);
