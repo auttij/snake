@@ -3,7 +3,8 @@ h = 480;
 
 var s;          // Global variable for storing the Snake object
 var scl = 20;   // Scale used for size of single block
-var apos; //global variable for storing apple position
+var apos;       // Global variable for storing apple position
+var running = true  // Toggles pausing the game
 
 function setup() {
     createCanvas(w, h);
@@ -14,9 +15,28 @@ function setup() {
 
 function draw() {
     background(51);
-    s.update();
+    
+    if (running) {
+        s.update();
+    } 
     s.show();
     showApple();
+
+    if (!running) {
+        drawPause();
+    }
+}
+
+function drawPause() {
+    textSize(32);
+    fill(255);
+    strokeWeight(4);
+    stroke(0); // Black stroke for the text
+    textAlign(CENTER);
+    text('Paused', w/2, h/3);
+
+    // Reset stroke thickness for other things.
+    strokeWeight(1);
 }
 
 function keyPressed() {
@@ -28,6 +48,8 @@ function keyPressed() {
         s.dir(0, -1);
     } else if (keyCode === DOWN_ARROW || keyCode === 'S') {
         s.dir(0, 1);
+    } else if (keyCode == ESCAPE) {
+        running = !running; // Toggles paused
     }
 }
 

@@ -3,10 +3,11 @@ function Snake() {
     this.y = 240;
     this.xspeed = 1;
     this.yspeed = 0;
-    this.length = 0;
+    this.length = 2;
     this.tail = [];
 
     this.dir = function(x, y) {
+        // If player turns twice quick enough, it's possible to do 180 turns
         if (this.xspeed != -x && this.yspeed != -y) {
             this.xspeed = x;
             this.yspeed = y;
