@@ -21,7 +21,17 @@ function Snake() {
         }
     }
 
+    this.death = function() {
+
+    }
+
     this.update = function() {
+        // If we ate ate an apple, the oldest block doesn't get deleted
+        if (this.tail.length > this.length) {            
+            this.tail = _.dropRight(this.tail, 1);
+        }
+        this.tail.unshift([this.x, this.y]);
+
         this.x = this.x + this.xspeed * scl;
         this.y = this.y + this.yspeed * scl;
         
@@ -30,18 +40,11 @@ function Snake() {
         this.y = constrain(this.y, 0, height - scl);
 
         this.eat();
-
-        // If we ate ate an apple, the oldest block doesn't get deleted
-        if (this.tail.length > this.length) {            
-            this.tail = _.dropRight(this.tail, 1);
-        }
-        this.tail.unshift([this.x, this.y]);
     }
 
     this.show = function() {
         // Draw tail first, then head block
-        // Newest position of tail is same as head position and doesn't get drawn
-        for (i = 1; i < this.tail.length; i++) {
+        for (i = 0; i < this.tail.length; i++) {
             fill(200);
             block = this.tail[i];
             rect(block[0], block[1], scl, scl);
