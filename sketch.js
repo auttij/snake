@@ -16,6 +16,7 @@ function setup() {
 function draw() {
     background(51);
     
+    s.death();
     if (running) {
         s.update();
     } 

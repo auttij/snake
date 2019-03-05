@@ -15,22 +15,32 @@ function Snake() {
     }
 
     this.eat = function() {
-        if ((this.x - apos[0]) == 0 && (this.y - apos[1]) == 0) {
+        d = dist(this.x, this.y, apos[0], apos[1])
+        if (d < 1) {
             this.length++;
             apple();
         }
     }
 
+    // Checks if the snake is colliding with itself and kills part
+    // of the snake if it happens.
     this.death = function() {
-
+        for (i = 0; i < this.tail.length; i++) {
+            pos = this.tail[i];
+            d = dist(this.x, this.y, pos[0], pos[1])
+            if (d < 1) {
+                this.tail = _.take(this.tail, i);
+                this.length = i;
+            }
+        }
     }
 
     this.update = function() {
         // If we ate ate an apple, the oldest block doesn't get deleted
+        this.tail.unshift([this.x, this.y]);
         if (this.tail.length > this.length) {            
             this.tail = _.dropRight(this.tail, 1);
         }
-        this.tail.unshift([this.x, this.y]);
 
         this.x = this.x + this.xspeed * scl;
         this.y = this.y + this.yspeed * scl;
@@ -46,8 +56,8 @@ function Snake() {
         // Draw tail first, then head block
         for (i = 0; i < this.tail.length; i++) {
             fill(200);
-            block = this.tail[i];
-            rect(block[0], block[1], scl, scl);
+            pos = this.tail[i];
+            rect(pos[0], pos[1], scl, scl);
         }
         
         fill(255)
